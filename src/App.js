@@ -4,6 +4,11 @@ import axios from "axios";
 import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { session: null, info: null, data: null };
+  }
   hancleConncect = () => {
     axios({
       method: "get",
@@ -27,13 +32,31 @@ class App extends Component {
           "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
-          console.log(res);
+          this.setState({
+            session: { ...res.data.session, realmId: params.realmId }
+          });
         })
         .catch(err => {
-          console.log(err.response.data.errorMessage);
+          console.log(err);
         });
     }
   }
+
+  handleLoadInfo = () => {
+    axios({
+      method: "post",
+      data: { session: { ...this.state.session } },
+      url:
+        "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/connected"
+    })
+      .then(res => {
+        this.setState({ data: { ...res.data.data } });
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err.response.data.errorMessage);
+      });
+  };
 
   getSearchParameters = () => {
     var prmstr = window.location.search.substr(1);
@@ -59,9 +82,23 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
           <button onClick={() => this.hancleConncect()}> connect to qb </button>
-        </p>
+
+          {this.state.session ? (
+            <button onClick={() => this.handleLoadInfo()}>load info</button>
+          ) : null}
+          {this.state.data ? (
+            <div>
+              <p>email: {this.state.data.email}</p>
+              <p>
+                name:{" "}
+                {`${this.state.data.givenName} ${this.state.data.familyName}`}
+              </p>
+              <p>phone: {this.state.data.phoneNumber}</p>
+            </div>
+          ) : null}
+        </div>
       </div>
     );
   }
