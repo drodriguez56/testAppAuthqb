@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { session: null, info: null, data: null };
+    this.state = { session: null, info: null, data: null, loading: false };
   }
   hancleConncect = () => {
     axios({
@@ -25,16 +25,19 @@ class App extends Component {
   componentDidMount() {
     const params = this.getSearchParameters();
     if (params.code) {
+      this.setState({ loading: true });
       axios({
         method: "post",
-        data: { params },
+        data: { ...params, realmId: 123 },
         url:
           "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
+          const session = { ...res.data.session, realmId: params.realmId };
           this.setState({
-            session: { ...res.data.session, realmId: params.realmId }
+            session
           });
+          this.handleLoadInfo(session);
         })
         .catch(err => {
           console.log(err);
@@ -42,16 +45,15 @@ class App extends Component {
     }
   }
 
-  handleLoadInfo = () => {
+  handleLoadInfo = session => {
     axios({
       method: "post",
-      data: { session: { ...this.state.session } },
+      data: { session },
       url:
         "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/connected"
     })
       .then(res => {
-        this.setState({ data: { ...res.data.data } });
-        console.log(res);
+        this.setState({ data: { ...res.data.data }, loading: false });
       })
       .catch(err => {
         console.log(err.response.data.errorMessage);
@@ -82,23 +84,26 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div className="App-intro">
-          <button onClick={() => this.hancleConncect()}> connect to qb </button>
-
-          {this.state.session ? (
-            <button onClick={() => this.handleLoadInfo()}>load info</button>
-          ) : null}
-          {this.state.data ? (
-            <div>
-              <p>email: {this.state.data.email}</p>
-              <p>
-                name:{" "}
-                {`${this.state.data.givenName} ${this.state.data.familyName}`}
-              </p>
-              <p>phone: {this.state.data.phoneNumber}</p>
-            </div>
-          ) : null}
-        </div>
+        {this.state.loading ? (
+          <p>Loading data...</p>
+        ) : (
+          <div className="App-intro">
+            <button onClick={() => this.hancleConncect()}>
+              {" "}
+              connect to qb{" "}
+            </button>
+            {this.state.data ? (
+              <div>
+                <p>email: {this.state.data.email}</p>
+                <p>
+                  name:{" "}
+                  {`${this.state.data.givenName} ${this.state.data.familyName}`}
+                </p>
+                <p>phone: {this.state.data.phoneNumber}</p>
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
     );
   }
