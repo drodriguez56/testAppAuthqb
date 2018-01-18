@@ -13,7 +13,7 @@ class App extends Component {
     axios({
       method: "get",
       url:
-        "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
+        "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
     })
       .then(res => {
         window.location.href = res.data.location;
@@ -30,7 +30,7 @@ class App extends Component {
         method: "post",
         data: { ...params, realmId: 123 },
         url:
-          "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
+          "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
           const session = { ...res.data.session, realmId: params.realmId };
@@ -50,7 +50,7 @@ class App extends Component {
       method: "post",
       data: { session },
       url:
-        "https://hzzdtkh6m8.execute-api.us-east-1.amazonaws.com/dev/api/connected"
+        "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/connected"
     })
       .then(res => {
         this.setState({ data: { ...res.data.data }, loading: false });
