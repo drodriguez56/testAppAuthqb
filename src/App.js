@@ -7,20 +7,26 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { session: null, info: null, data: null, loading: false };
+    this.state = { session: null, info: null, data: null, loading: true };
   }
-  hancleConncect = () => {
-    axios({
-      method: "get",
-      url:
-        "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
-    })
-      .then(res => {
-        window.location.href = res.data.location;
+
+  handleConncect = () => {
+    const params = this.getSearchParameters();
+    if (!params.code) {
+      axios({
+        method: "get",
+        url:
+          "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(res => {
+          window.location.href = res.data.location;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      this.setState({ loading: false, err: "clear url" });
+    }
   };
   componentDidMount() {
     const params = this.getSearchParameters();
@@ -42,6 +48,8 @@ class App extends Component {
         .catch(err => {
           console.log(err);
         });
+    } else {
+      this.handleConncect();
     }
   }
 
@@ -53,7 +61,14 @@ class App extends Component {
         "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/connected"
     })
       .then(res => {
-        this.setState({ data: { ...res.data.data }, loading: false });
+        if (res.data.statusCode === 501) {
+          this.setState({
+            err: "account already created",
+            loading: false
+          });
+        } else {
+          this.setState({ data: true, loading: false });
+        }
       })
       .catch(err => {
         console.log(err.response.data.errorMessage);
@@ -80,26 +95,22 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+        <h1>ZemDash</h1>
         {this.state.loading ? (
-          <p>Loading data...</p>
+          <div>
+            <div class="loader" />
+            <p>Processing Application...</p>
+          </div>
         ) : (
           <div className="App-intro">
-            <button onClick={() => this.hancleConncect()}>
-              {" "}
-              connect to qb{" "}
-            </button>
             {this.state.data ? (
               <div>
-                <p>email: {this.state.data.email}</p>
-                <p>
-                  name:{" "}
-                  {`${this.state.data.givenName} ${this.state.data.familyName}`}
-                </p>
-                <p>phone: {this.state.data.phoneNumber}</p>
+                <p>APPLICATION COMPLETE :)</p>
+              </div>
+            ) : null}
+            {this.state.err ? (
+              <div>
+                <p>{this.state.err}</p>
               </div>
             ) : null}
           </div>
