@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ProgressButton from "react-progress-button";
 
 class Calback extends Component {
   componentDidMount() {
@@ -10,32 +11,35 @@ class Calback extends Component {
         method: "post",
         data: { ...searchParams, realmId },
         url:
-          "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
+          "https://a0i5dxyze5.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
           if (res.data.session) {
             axios({
               method: "post",
-              data: { session: res.data.session },
+              data: { session: res.data.session, realmId },
               url:
-                "https://opwhtrvvni.execute-api.us-east-1.amazonaws.com/dev/api/connected"
+                "https://a0i5dxyze5.execute-api.us-east-1.amazonaws.com/dev/api/connected"
             })
               .then(resp => {
-                let test;
-                let message;
+                let error;
+                let errorMessage = "";
+                let message = "";
                 if (resp.data.statusCode === 501) {
-                  test = false;
-                  message = "You already applyed";
+                  error = true;
+                  errorMessage = "You already applyed";
                 } else {
-                  test = true;
+                  error = false;
                   message = "Application was successfull";
                 }
-                this.props.history.push("/apply", [{ test, message }]);
+                this.props.history.push("/apply", [
+                  { error, message, errorMessage }
+                ]);
               })
               .catch(err => {
                 this.props.history.push("/apply", [
                   {
-                    err: true,
+                    error: true,
                     message: "",
                     errorMessage: err.response.data.errorMessage
                   }
@@ -44,7 +48,7 @@ class Calback extends Component {
           } else {
             this.props.history.push("/apply", [
               {
-                err: true,
+                error: true,
                 message: "",
                 errorMessage: "something went wrong please try again"
               }
@@ -80,8 +84,12 @@ class Calback extends Component {
     // recieve callback url
     return (
       <React.Fragment>
-        <div className="loader" />
-        <div className="loaderMessage">processing application</div>
+        <div style={{ width: "100px", margin: "0 auto" }}>
+          <ProgressButton disable="true" state={"loading"} />
+        </div>
+        <div className="loaderMessage">
+          <p>processing application</p>
+        </div>
       </React.Fragment>
     );
   }
