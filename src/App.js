@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <React.Fragment>
       <p>ZemDash Demo</p>
-      <Link to="/apply/5a627b7d5398e900010a67ee">Click to Apply</Link>
+      <Link to="/company">go to company dashboard</Link>
     </React.Fragment>
   );
 };
