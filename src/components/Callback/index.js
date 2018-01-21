@@ -27,7 +27,7 @@ class Calback extends Component {
                 let message = "";
                 if (resp.data.statusCode === 501) {
                   error = true;
-                  errorMessage = "You already applyed";
+                  errorMessage = "You already applied";
                 } else {
                   error = false;
                   message = "Application was successfull";
