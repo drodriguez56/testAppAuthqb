@@ -4,6 +4,8 @@ import Amplify from "aws-amplify";
 import Apply from "./components/Apply";
 import Callback from "./components/Callback";
 import Company from "./components/Company";
+import Report from "./components/Company/report";
+
 import aws_exports from "./aws-exports";
 
 Amplify.configure(aws_exports);
@@ -26,9 +28,10 @@ export default () => {
         <Switch>
           <Route path="/apply/:realmId" component={Apply} />
           <Route path="/apply" component={Apply} />
+          <Route path="/callback" component={Callback} />
+          <Route path="/company" component={Company} />
+          <Route path="/report" component={Report} />
         </Switch>
-        <Route path="/callback" component={Callback} />
-        <Route path="/company" component={Company} />
       </div>
     </Router>
   );

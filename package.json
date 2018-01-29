@@ -6,6 +6,7 @@
     "aws-amplify": "^0.1.36",
     "aws-amplify-react": "^0.1.31",
     "axios": "^0.17.0",
+    "jwt-decode": "^2.2.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-progress-button": "^5.1.0",

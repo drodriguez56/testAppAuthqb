@@ -11,15 +11,17 @@ class Calback extends Component {
         method: "post",
         data: { ...searchParams, realmId },
         url:
-          "https://a0i5dxyze5.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
+          "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
+          console.log(res);
           if (res.data.session) {
+            console.log(res.data.session);
             axios({
               method: "post",
-              data: { session: res.data.session, realmId },
+              data: { session: res.data.session, companyId: realmId },
               url:
-                "https://a0i5dxyze5.execute-api.us-east-1.amazonaws.com/dev/api/connected"
+                "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/connected"
             })
               .then(resp => {
                 let error;

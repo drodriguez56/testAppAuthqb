@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { withAuthenticator } from "aws-amplify-react";
+import "./company.css";
 
 class Company extends Component {
   constructor(props) {
@@ -9,31 +10,17 @@ class Company extends Component {
     this.state = { idToken: null, loading: true, company: null };
   }
   componentDidMount() {
-    let token;
-    Object.keys(window.localStorage).map(id => {
-      if (id.toString().includes("idToken")) {
-        token = window.localStorage[id];
-        return true;
-      } else return false;
-    });
-    this.setState({ idToken: token });
-    if (token) {
-      axios({
-        methid: "get",
-        url:
-          "https://a0i5dxyze5.execute-api.us-east-1.amazonaws.com/dev/api/company",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "bearer " + token
-        }
+    axios({
+      method: "get",
+      url:
+        "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/company/5a6a6b85f23dce0001e14de3"
+    })
+      .then(res => {
+        this.setState({ loading: false, company: res.data[0] });
       })
-        .then(res => {
-          this.setState({ loading: false, company: res.data });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+      .catch(err => {
+        console.log(err);
+      });
   }
   render() {
     const { company, loading } = this.state;
@@ -43,14 +30,40 @@ class Company extends Component {
         {company ? (
           <div>
             <p>apply link</p>
-            <p>http://localhost:3000/apply/{company._id}</p>
+            <p>
+              {window.location.hostname}
+              {(process.env.NODE_ENV === "development" && ":3000") ||
+                ""}/apply/{company._id}
+            </p>
             {company.users.length > 0 ? (
               <div>
                 <p>Clients</p>
                 {company.users.map(client => (
-                  <a key={client._id}>{`${client.firstname} ${
-                    client.lastname
-                  }`}</a>
+                  <div className="client" key={client._id}>
+                    <p>
+                      {`${client.firstname} ${client.lastname}`} --{" "}
+                      {client.email}
+                    </p>
+                    <p className="subtitle">
+                      <b>Reports</b>
+                    </p>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: { client, reportType: "BalanceSheet" }
+                      }}
+                    >
+                      Balance Sheet
+                    </Link>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: { client, reportType: "ProfitAndLoss" }
+                      }}
+                    >
+                      Profit And Loss
+                    </Link>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -63,4 +76,4 @@ class Company extends Component {
   }
 }
 
-export default withAuthenticator(Company, { includeGreetings: true });
+export default Company;

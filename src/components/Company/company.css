@@ -1,0 +1,19 @@
+.client {
+  border: 1px solid gray;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+.client p {
+  font-size: 20px;
+}
+
+.client a {
+  color: rgb(77, 77, 255);
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.subtitle {
+  margin-left: 20px;
+}
