@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Amplify from "aws-amplify";
+// import Amplify from "aws-amplify";
 import Apply from "./components/Apply";
 import Callback from "./components/Callback";
 import Company from "./components/Company";
@@ -8,7 +8,7 @@ import Report from "./components/Company/report";
 
 import aws_exports from "./aws-exports";
 
-Amplify.configure(aws_exports);
+// Amplify.configure(aws_exports);
 
 const Home = () => {
   // Home page
