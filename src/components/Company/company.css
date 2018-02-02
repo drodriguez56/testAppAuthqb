@@ -17,3 +17,43 @@
 .subtitle {
   margin-left: 20px;
 }
+.data {
+  display: inline-block;
+  margin: 0;
+  font-size: 15px;
+}
+
+.columns {
+  margin-left: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.rows {
+  margin-left: 10px;
+}
+
+.header .data,
+.summary .data {
+  font-weight: 600;
+}
+
+.number {
+  position: absolute;
+  right: 0;
+}
+
+.report {
+  position: relative;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.report-title {
+  text-align: center;
+}
+.report-dates {
+  text-align: center;
+}
+
+.datePiker {
+  margin-bottom: 20px;
+}

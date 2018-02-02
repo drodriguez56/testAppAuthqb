@@ -14,9 +14,7 @@ class Calback extends Component {
           "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
-          console.log(res);
           if (res.data.session) {
-            console.log(res.data.session);
             axios({
               method: "post",
               data: { session: res.data.session, companyId: realmId },

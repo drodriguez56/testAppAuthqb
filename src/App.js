@@ -6,7 +6,7 @@ import Callback from "./components/Callback";
 import Company from "./components/Company";
 import Report from "./components/Company/report";
 
-import aws_exports from "./aws-exports";
+// import aws_exports from "./aws-exports";
 
 // Amplify.configure(aws_exports);
 
