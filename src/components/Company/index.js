@@ -32,7 +32,7 @@ class Company extends Component {
             <p>apply link</p>
             <p>
               {window.location.hostname}
-              {(process.env.NODE_ENV === "development" && ":3000") ||
+              {(window.location.hostname.includes("localhost") && ":3000") ||
                 ""}/apply/{company._id}
             </p>
             {company.users.length > 0 ? (
