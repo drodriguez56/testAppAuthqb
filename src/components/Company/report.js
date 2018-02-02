@@ -112,8 +112,9 @@ class Report extends Component {
 
   render() {
     const { loading, report, startDate, endDate } = this.state;
+    console.log(report);
     return (
-      <div>
+      <div className="reportSection">
         {loading || !report ? (
           <ProgressButton disable="true" state={"loading"} />
         ) : (

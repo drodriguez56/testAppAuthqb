@@ -63,6 +63,22 @@ class Company extends Component {
                     >
                       Profit And Loss
                     </Link>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: { client, reportType: "AgedReceivables" }
+                      }}
+                    >
+                      Aged Receivables
+                    </Link>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: { client, reportType: "AgedPayables" }
+                      }}
+                    >
+                      Aged Payables
+                    </Link>
                   </div>
                 ))}
               </div>
