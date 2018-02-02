@@ -4,10 +4,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-p {
-  font-size: 2em;
-}
-
 .pb-container {
   display: inline-block;
   text-align: center;
@@ -35,7 +31,6 @@ p {
 .pb-container .pb-button span {
   display: inherit;
   transition: opacity 0.3s 0.1s;
-  font-size: 2em;
   font-weight: 100;
 }
 .pb-container .pb-button svg {

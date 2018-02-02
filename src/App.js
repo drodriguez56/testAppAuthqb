@@ -23,7 +23,7 @@ const Home = () => {
 export default () => {
   return (
     <Router>
-      <div style={{ margin: "100px" }}>
+      <div>
         <Route exact path="/" component={Home} />
         <Switch>
           <Route path="/apply/:realmId" component={Apply} />
