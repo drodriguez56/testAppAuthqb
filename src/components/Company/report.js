@@ -139,7 +139,13 @@ class Report extends Component {
               />
               <button onClick={this.handleSubmit}>search new dates</button>
             </div>
-            {this.renderRows(report)}
+            {report && report.Header.Option[1].Value === "false" ? (
+              <div>{this.renderRows(report)}</div>
+            ) : (
+              <h3 className="noData">
+                No data Available for the period selected
+              </h3>
+            )}
           </div>
         )}
       </div>

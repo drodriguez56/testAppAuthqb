@@ -57,3 +57,7 @@
 .datePiker {
   margin-bottom: 20px;
 }
+.noData {
+  text-align: center;
+  color: rgb(199, 90, 90);
+}
