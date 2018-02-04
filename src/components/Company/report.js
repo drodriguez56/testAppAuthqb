@@ -67,7 +67,7 @@ class Report extends Component {
 
   renderRows = object => {
     return object.Rows.Row.map((row, idx) => {
-      return <div key={idx}>{this.renderObject(row)}</div>;
+      return this.renderObject(row);
     });
   };
 
@@ -76,31 +76,19 @@ class Report extends Component {
       return false;
     }
     const header = (
-      <div className="row">
-        <table className="header">
-          <tr>{this.renderCol(object.Header)}</tr>
-        </table>
-      </div>
+      <tr className="sub-header">{this.renderCol(object.Header)}</tr>
     );
     const summary = (
-      <div>
-        <table className="summary">
-          <tr>{this.renderCol(object.Summary)}</tr>
-        </table>
-      </div>
+      <tr className="summary">{this.renderCol(object.Summary)}</tr>
     );
     const col = (
-      <div className="row">
-        <table className="columns">
-          <tr>{object.ColData && this.renderCol(object)}</tr>
-        </table>
-      </div>
+      <tr className="colData">{object.ColData && this.renderCol(object)}</tr>
     );
     const row = (
-      <div className="rows">
+      <React.Fragment>
         {object.Rows && this.renderRows(object)}
         {summary}
-      </div>
+      </React.Fragment>
     );
     return (
       <React.Fragment>
@@ -123,17 +111,13 @@ class Report extends Component {
   };
 
   renderColumHeaders = object => {
-    return (
-      <table>
-        {object.Columns.Column.map((col, idx) => {
-          return (
-            <th key={idx} className="colHeader">
-              {col.ColTitle}
-            </th>
-          );
-        })}
-      </table>
-    );
+    return object.Columns.Column.map((col, idx) => {
+      return (
+        <th key={idx} className="colHeader">
+          {col.ColTitle}
+        </th>
+      );
+    });
   };
 
   handleChange = e => {
@@ -180,10 +164,10 @@ class Report extends Component {
               <button onClick={this.handleSubmit}>search new dates</button>
             </div>
             {report && report.Header.Option[1].Value === "false" ? (
-              <div>
-                <div>{this.renderColumHeaders(report)}</div>
-                {this.renderRows(report)}
-              </div>
+              <table>
+                {this.renderColumHeaders(report)}
+                <tbody>{this.renderRows(report)}</tbody>
+              </table>
             ) : (
               <h3 className="noData">
                 No data Available for the period selected

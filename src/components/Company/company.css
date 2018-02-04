@@ -11,33 +11,12 @@
   margin-left: 20px;
 }
 
-.subtitle {
-  margin-left: 20px;
-}
-.data {
-  margin: 0;
-  font-size: 15px;
-}
-
-.columns {
-  margin-left: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-.rows {
-  margin-left: 10px;
-}
-
-.header .data,
-.summary .data {
+.sub-header,
+.summary {
   font-weight: 600;
 }
-
-.number {
-}
-
 .report {
   position: relative;
-  width: 880px;
   margin: 0 auto;
 }
 .report-title {
@@ -46,9 +25,16 @@
 .report-dates {
   text-align: center;
 }
-
+.colData td {
+  border-bottom: 1px solid #cecfd5;
+  padding: 5px 15px;
+}
+.colData td.number {
+  padding: 0 !important;
+}
 .datePiker {
   margin-bottom: 20px;
+  text-align: center;
 }
 .noData {
   text-align: center;
@@ -60,5 +46,7 @@
 }
 
 table {
-  width: 100%;
+  margin: 0 auto;
+  min-width: 700px;
+  border-collapse: collapse;
 }
