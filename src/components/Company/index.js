@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 import "./company.css";
 
 class Company extends Component {
@@ -78,6 +79,44 @@ class Company extends Component {
                       }}
                     >
                       Aged Payables
+                    </Link>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: {
+                          client,
+                          reportType: "AgedPayableDetail",
+                          date: {
+                            start: {
+                              key: "start_duedate"
+                            },
+                            end: {
+                              key: "end_duedate"
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      AP Detail
+                    </Link>
+                    <Link
+                      to={{
+                        pathname: "/report",
+                        state: {
+                          client,
+                          reportType: "AgedReceivableDetail",
+                          date: {
+                            start: {
+                              key: "start_duedate"
+                            },
+                            end: {
+                              key: "end_duedate"
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      AR Detail
                     </Link>
                   </div>
                 ))}

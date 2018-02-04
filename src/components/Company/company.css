@@ -15,7 +15,6 @@
   margin-left: 20px;
 }
 .data {
-  display: inline-block;
   margin: 0;
   font-size: 15px;
 }
@@ -34,14 +33,11 @@
 }
 
 .number {
-  position: absolute;
-  right: 0;
 }
 
 .report {
   position: relative;
-  min-width: 300px;
-  max-width: 600px;
+  width: 880px;
   margin: 0 auto;
 }
 .report-title {
@@ -61,4 +57,8 @@
 .reportSection {
   padding-bottom: 100px;
   padding-top: 30px;
+}
+
+table {
+  width: 100%;
 }

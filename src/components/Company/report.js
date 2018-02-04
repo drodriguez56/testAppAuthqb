@@ -19,15 +19,28 @@ class Report extends Component {
     };
   }
   componentDidMount() {
-    const { location: { state: { client, reportType } } } = this.props;
+    const { location: { state: { client, reportType, date } } } = this.props;
     this.setState({ loading: true, client, reportType });
-    this.loadReport(client, reportType);
+    this.loadReport(client, reportType, date);
   }
 
-  loadReport = (client, reportType) => {
+  loadReport = (client, reportType, date) => {
     // date format YYYY-MM-DD
+
+    date = (date && {
+      start: { ...date.start, value: this.state.startDate },
+      end: { ...date.end, value: this.state.endDate }
+    }) || {
+      start: {
+        key: "start_date",
+        value: this.state.startDate
+      },
+      end: {
+        key: "end_date",
+        value: this.state.endDate
+      }
+    };
     this.setState({ loading: true });
-    const { startDate, endDate } = this.state;
     const tokens = JSON.parse(client.session);
     const data = decode(tokens.data.id_token);
     if (client) {
@@ -38,8 +51,7 @@ class Report extends Component {
           session: JSON.parse(session),
           realmId: data.realmid,
           reportType,
-          startDate,
-          endDate
+          date
         },
         url: `https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/report`
       })
@@ -64,13 +76,25 @@ class Report extends Component {
       return false;
     }
     const header = (
-      <div className="header">{this.renderCol(object.Header)}</div>
+      <div className="row">
+        <table className="header">
+          <tr>{this.renderCol(object.Header)}</tr>
+        </table>
+      </div>
     );
     const summary = (
-      <div className="summary">{this.renderCol(object.Summary)}</div>
+      <div>
+        <table className="summary">
+          <tr>{this.renderCol(object.Summary)}</tr>
+        </table>
+      </div>
     );
     const col = (
-      <div className="columns">{object.ColData && this.renderCol(object)}</div>
+      <div className="row">
+        <table className="columns">
+          <tr>{object.ColData && this.renderCol(object)}</tr>
+        </table>
+      </div>
     );
     const row = (
       <div className="rows">
@@ -88,14 +112,28 @@ class Report extends Component {
     if (!object) {
       return false;
     }
-    return object.ColData.map(data => (
-      <p
-        key={data.value}
+    return object.ColData.map((data, idx) => (
+      <td
+        key={data.value + idx}
         className={`data ${(!isNaN(+data.value) && "number") || ""}`}
       >
         {data.value}
-      </p>
+      </td>
     ));
+  };
+
+  renderColumHeaders = object => {
+    return (
+      <table>
+        {object.Columns.Column.map((col, idx) => {
+          return (
+            <th key={idx} className="colHeader">
+              {col.ColTitle}
+            </th>
+          );
+        })}
+      </table>
+    );
   };
 
   handleChange = e => {
@@ -113,6 +151,7 @@ class Report extends Component {
   render() {
     const { loading, report, startDate, endDate } = this.state;
     console.log(report);
+
     return (
       <div className="reportSection">
         {loading || !report ? (
@@ -141,7 +180,10 @@ class Report extends Component {
               <button onClick={this.handleSubmit}>search new dates</button>
             </div>
             {report && report.Header.Option[1].Value === "false" ? (
-              <div>{this.renderRows(report)}</div>
+              <div>
+                <div>{this.renderColumHeaders(report)}</div>
+                {this.renderRows(report)}
+              </div>
             ) : (
               <h3 className="noData">
                 No data Available for the period selected
