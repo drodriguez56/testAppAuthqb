@@ -29,9 +29,11 @@ class Company extends Component {
       <React.Fragment>
         <div>{loading && "loading data"}</div>
         {company ? (
-          <div>
-            <p>apply link</p>
-            <p>
+          <div className="company">
+            <p style={{ display: "inline-block", marginRight: "10px" }}>
+              <b>Share this link for clients to apply:</b>
+            </p>
+            <p className="link">
               {window.location.hostname}
               {(window.location.hostname.includes("localhost") && ":3000") ||
                 ""}/apply/{company._id}
@@ -122,7 +124,9 @@ class Company extends Component {
                 ))}
               </div>
             ) : (
-              <div>no clients applied yet</div>
+              <div>
+                <p>No clients have applied yet</p>
+              </div>
             )}
           </div>
         ) : null}

@@ -4,7 +4,17 @@
   padding: 5px;
   border-radius: 5px;
 }
-
+.company {
+  margin: 50px;
+}
+.link {
+  margin: 0;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(235, 231, 231);
+  border: 1px dashed grey;
+}
 .client a {
   color: rgb(77, 77, 255);
   cursor: pointer;
