@@ -14,7 +14,7 @@ class Company extends Component {
     axios({
       method: "get",
       url:
-        "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/company/5a6a6b85f23dce0001e14de3"
+        "https://5crjz5pq9f.execute-api.us-east-1.amazonaws.com/dev/api/company/5a809470f996cb0001402cb2"
     })
       .then(res => {
         this.setState({ loading: false, company: res.data[0] });
@@ -38,14 +38,16 @@ class Company extends Component {
               {(window.location.hostname.includes("localhost") && ":3000") ||
                 ""}/apply/{company._id}
             </p>
-            {company.users.length > 0 ? (
+            {company.applications.length > 0 ? (
               <div>
                 <p>Clients</p>
-                {company.users.map(client => (
-                  <div className="client" key={client._id}>
+                {company.applications.map(application => (
+                  <div className="client" key={application._id}>
                     <p>
-                      {`${client.firstname} ${client.lastname}`} --{" "}
-                      {client.email}
+                      {`${application.user.firstname} ${
+                        application.user.lastname
+                      }`}{" "}
+                      -- {application.user.email}
                     </p>
                     <p className="subtitle">
                       <b>Reports</b>
@@ -53,7 +55,10 @@ class Company extends Component {
                     <Link
                       to={{
                         pathname: "/report",
-                        state: { client, reportType: "BalanceSheet" }
+                        state: {
+                          client: application.user,
+                          reportType: "BalanceSheet"
+                        }
                       }}
                     >
                       Balance Sheet
@@ -61,7 +66,10 @@ class Company extends Component {
                     <Link
                       to={{
                         pathname: "/report",
-                        state: { client, reportType: "ProfitAndLoss" }
+                        state: {
+                          client: application.user,
+                          reportType: "ProfitAndLoss"
+                        }
                       }}
                     >
                       Profit And Loss
@@ -69,7 +77,10 @@ class Company extends Component {
                     <Link
                       to={{
                         pathname: "/report",
-                        state: { client, reportType: "AgedReceivables" }
+                        state: {
+                          client: application.user,
+                          reportType: "AgedReceivables"
+                        }
                       }}
                     >
                       Aged Receivables
@@ -77,7 +88,10 @@ class Company extends Component {
                     <Link
                       to={{
                         pathname: "/report",
-                        state: { client, reportType: "AgedPayables" }
+                        state: {
+                          client: application.user,
+                          reportType: "AgedPayables"
+                        }
                       }}
                     >
                       Aged Payables
@@ -86,7 +100,7 @@ class Company extends Component {
                       to={{
                         pathname: "/report",
                         state: {
-                          client,
+                          client: application.user,
                           reportType: "AgedPayableDetail",
                           date: {
                             start: {
@@ -105,7 +119,7 @@ class Company extends Component {
                       to={{
                         pathname: "/report",
                         state: {
-                          client,
+                          client: application.user,
                           reportType: "AgedReceivableDetail",
                           date: {
                             start: {

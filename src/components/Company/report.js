@@ -53,7 +53,7 @@ class Report extends Component {
           reportType,
           date
         },
-        url: `https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/report`
+        url: `https://5crjz5pq9f.execute-api.us-east-1.amazonaws.com/dev/api/report`
       })
         .then(res => {
           const body = JSON.parse(res.data.body);

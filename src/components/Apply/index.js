@@ -18,7 +18,7 @@ class Apply extends Component {
       axios({
         method: "get",
         url:
-          "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
+          "https://5crjz5pq9f.execute-api.us-east-1.amazonaws.com/dev/api/qbAuthUrl"
       })
         .then(res => {
           window.location.href = res.data.location;

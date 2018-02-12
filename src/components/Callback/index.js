@@ -11,7 +11,7 @@ class Calback extends Component {
         method: "post",
         data: { ...searchParams, realmId },
         url:
-          "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
+          "https://5crjz5pq9f.execute-api.us-east-1.amazonaws.com/dev/api/qbCallback"
       })
         .then(res => {
           if (res.data.session) {
@@ -19,13 +19,16 @@ class Calback extends Component {
               method: "post",
               data: { session: res.data.session, companyId: realmId },
               url:
-                "https://auu0bifd3k.execute-api.us-east-1.amazonaws.com/dev/api/connected"
+                "https://5crjz5pq9f.execute-api.us-east-1.amazonaws.com/dev/api/connected"
             })
               .then(resp => {
                 let error;
                 let errorMessage = "";
                 let message = "";
-                if (resp.data.statusCode === 501) {
+                if (
+                  resp.data.statusCode === 501 ||
+                  resp.data.statusCode === 422
+                ) {
                   error = true;
                   errorMessage = "You already applied";
                 } else {
